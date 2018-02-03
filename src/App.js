@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import './App.css';
 import * as BookAPI from './utils/BookAPI';
 import BookShelf from './components/BookShelf';
+import Search from './components/Search';
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +31,9 @@ class App extends Component {
   }
 
   componentWillUpdate() {
+    BookAPI.getAll().then((books) => {
+      console.log(books); // eslint-disable-line
+    });
   }
 
   // TODO: There has to be a better method for doing this, possibly array().reduce
@@ -57,7 +62,6 @@ class App extends Component {
     const books = this.state.books.filter(obj => obj.id !== book.id);
     book.shelf = shelf;
 
-    // TODO: Push update to BookAPI
     BookAPI.update(book, shelf);
 
     this.setState({
@@ -68,10 +72,26 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <BookShelf title='Currently Reading' books={this.state.books.filter(book => book.shelf === 'currentlyReading')} updateShelf={this.updateShelf} />
-        <BookShelf title='Want To Read' books={this.state.books.filter(book => book.shelf === 'wantToRead')} updateShelf={this.updateShelf} />
-        <BookShelf title='Recommended' books={ this.state.books.filter(book => (book.shelf !== 'read') && (book.shelf !== 'currentlyReading') && (book.shelf !== 'wantToRead') && book.averageRating > 4 )} updateShelf={this.updateShelf} />
-        <BookShelf title='Read' books={this.state.books.filter(book => book.shelf === 'read')} updateShelf={this.updateShelf} />
+        <div className='Title Bar'>
+          <span>Title Bar | </span>
+          <a href='/search'>Search</a>
+        </div>
+        <Route
+          exact
+          path='/'
+          render={() => (
+            <div className='bookshelves'>
+              <BookShelf title='Currently Reading' books={this.state.books.filter(book => book.shelf === 'currentlyReading')} updateShelf={this.updateShelf} />
+              <BookShelf title='Want To Read' books={this.state.books.filter(book => book.shelf === 'wantToRead')} updateShelf={this.updateShelf} />
+              <BookShelf title='Recommended' books={this.state.books.filter(book => (book.shelf !== 'read') && (book.shelf !== 'currentlyReading') && (book.shelf !== 'wantToRead') && book.averageRating > 4 )} updateShelf={this.updateShelf} />
+              <BookShelf title='Read' books={this.state.books.filter(book => book.shelf === 'read')} updateShelf={this.updateShelf} />
+            </div>
+          )}
+        />
+        <Route
+          path='/search'
+          render={() => <Search />}
+        />
       </div>
     );
   }
