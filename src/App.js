@@ -30,12 +30,6 @@ class App extends Component {
     })
   }
 
-  componentWillUpdate() {
-    BookAPI.getAll().then((books) => {
-      console.log(books); // eslint-disable-line
-    });
-  }
-
   // TODO: There has to be a better method for doing this, possibly array().reduce
   merge = (old, updated) => {
     var object = {};
@@ -90,7 +84,7 @@ class App extends Component {
         />
         <Route
           path='/search'
-          render={() => <Search />}
+          render={() => <Search updateShelf={this.updateShelf} />}
         />
       </div>
     );

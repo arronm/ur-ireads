@@ -53,6 +53,7 @@ class Book extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props.book.shelf); // eslint-disable-line
   }
 
   change = e => {
@@ -60,6 +61,7 @@ class Book extends Component {
     this.props.updateShelf(this.props.book, e.target.value);
   }
 
+  // TODO: figure out why this is not working in search
   shelf = this.props.book.shelf ? this.props.book.shelf : 'none';
 
   render() {
@@ -79,6 +81,7 @@ class Book extends Component {
           <option value="read">Read</option>
           <option value="none">None</option>
         </select>
+        <div>{this.props.book.averageRating}</div>
       </div>
     )
   }
