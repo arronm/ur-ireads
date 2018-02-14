@@ -7,19 +7,21 @@ import Book from './Book';
 class Search extends Component {
   static propTypes = {
     updateShelf: PropTypes.func.isRequired,
+    shelves: PropTypes.object,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      books: [],
+      bookQuery: [],
       query: '',
     };
   }
 
   componentWillMount() {
     BookAPI.search('Tolstoy').then((books) => {
-      this.setState({ books });
+      // TODO: use shelves to map book.shelf?
+      this.setState({ bookQuery: books });
     })
   }
 
@@ -36,8 +38,8 @@ class Search extends Component {
           onChange={(event) => this.updateQuery(event.target.value)}
         />
         <Link to='/'>Back</Link>
-        {this.state.books.map((book) => (
-          <Book book={book} key={book.id} updateShelf={this.props.updateShelf} />
+        {this.state.bookQuery.map((book) => (
+          <Book book={book} key={book.id} updateShelf={this.props.updateShelf} shelf={this.props.shelves[book.id]} />
         ))}
       </div>
     )

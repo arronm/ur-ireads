@@ -50,10 +50,10 @@ class Book extends Component {
       title: PropTypes.string.isRequired,
     }).isRequired,
     updateShelf: PropTypes.func.isRequired,
+    shelf: PropTypes.string,
   };
 
   componentDidMount() {
-    console.log(this.props.book.shelf); // eslint-disable-line
   }
 
   change = e => {
@@ -62,9 +62,10 @@ class Book extends Component {
   }
 
   // TODO: figure out why this is not working in search
-  shelf = this.props.book.shelf ? this.props.book.shelf : 'none';
+  // shelf = this.props.book.shelf ? this.props.book.shelf : 'none';
 
   render() {
+    const currentShelf = this.props.shelf ? this.props.shelf : 'none';
     return (
       <div className='book'>
         <img src={this.props.book.imageLinks.thumbnail} alt={this.props.book.title} />
@@ -74,7 +75,7 @@ class Book extends Component {
             <div className='author' key={author}>{ author }</div>
           )) }
         </div>
-        <select id="lang" onChange={this.change} value={this.shelf}>
+        <select id="lang" onChange={this.change} value={currentShelf}>
           <option value="none" disabled>Move to...</option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
