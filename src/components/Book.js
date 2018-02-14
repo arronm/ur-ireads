@@ -65,13 +65,14 @@ class Book extends Component {
   // shelf = this.props.book.shelf ? this.props.book.shelf : 'none';
 
   render() {
-    const currentShelf = this.props.shelf ? this.props.shelf : 'none';
+    const currentShelf = this.props.shelf ? this.props.shelf : 'none',
+    authors = this.props.book.authors ? this.props.book.authors : [ 'Unknown' ];
     return (
       <div className='book'>
         <img src={this.props.book.imageLinks.thumbnail} alt={this.props.book.title} />
         <h4 className='book-title'>{ this.props.book.title }</h4>
         <div className='authors'>
-          { this.props.book.authors.map((author) => (
+          { authors.map((author) => (
             <div className='author' key={author}>{ author }</div>
           )) }
         </div>

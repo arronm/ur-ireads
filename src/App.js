@@ -5,6 +5,8 @@ import * as BookAPI from './utils/BookAPI';
 import BookShelf from './components/BookShelf';
 import Search from './components/Search';
 
+
+// TODO: Update view based on state.query. Empty show book shelves, else show query
 class App extends Component {
   constructor(props) {
     super(props);

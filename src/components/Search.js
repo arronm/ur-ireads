@@ -21,12 +21,17 @@ class Search extends Component {
   componentWillMount() {
     BookAPI.search('Tolstoy').then((books) => {
       // TODO: use shelves to map book.shelf?
+      console.log('boooooooks:', books);
       this.setState({ bookQuery: books });
     })
   }
 
   updateQuery(value) {
     this.setState({query: value.trim()});
+    BookAPI.search(value).then((books) => {
+      console.log(books);
+      this.setState({bookQuery: books});
+    });
   }
 
   render() {
