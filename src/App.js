@@ -77,6 +77,7 @@ class App extends Component {
     } else {
       library.shelves[book.id] = book;
       library.shelves[book.id] = library.books.filter(obj => obj.id === book.id).shelf = shelf;
+      library.books.push(book);
     }
     this.setState({ library });
     BookAPI.update(book, shelf);
