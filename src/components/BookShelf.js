@@ -15,12 +15,24 @@ class BookShelf extends Component {
   render() {
     let shelf = null;
 
-    if (this.props.library.books.filter(book => this.props.library.shelves[book.id] === this.props.shelf).length > 0) {
+    // if (this.props.library.books.filter(book => this.props.library.shelves[book.id] === this.props.shelf).length > 0) {
+    //   shelf = (
+    //     this.props.library.books.filter(book => this.props.library.shelves[book.id] === this.props.shelf).map((book) => (
+    //       <Book book={book} key={book.id} updateShelf={this.props.updateShelf} shelf={this.props.library.shelves[book.id]} />
+    //     ))
+    //   );
+    // } else {
+    //   shelf = (
+    //     <span>You don{'\''}t appear to have any books in {this.props.title}</span>
+    //   )
+    // }
+
+    if (this.props.books.length > 0) {
       shelf = (
-        this.props.library.books.filter(book => this.props.library.shelves[book.id] === this.props.shelf).map((book) => (
-          <Book book={book} key={book.id} updateShelf={this.props.updateShelf} shelf={this.props.library.shelves[book.id]} />
+        this.props.books.map((book) => (
+          <Book book={book} key={book.id} updateShelf={this.props.updateShelf} shelf={this.props.shelves[book.id]} />
         ))
-      );
+      )
     } else {
       shelf = (
         <span>You don{'\''}t appear to have any books in {this.props.title}</span>

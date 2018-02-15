@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as BookAPI from '../utils/BookAPI';
 import Book from './Book';
+import BookShelf from './BookShelf';
 
 class Search extends Component {
   static propTypes = {
     updateShelf: PropTypes.func.isRequired,
-    shelves: PropTypes.object,
+    shelves: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -19,10 +20,10 @@ class Search extends Component {
   }
 
   componentWillMount() {
-    BookAPI.search('Tolstoy').then((books) => {
-      // TODO: use shelves to map book.shelf?
-      this.setState({ bookQuery: books });
-    })
+    // BookAPI.search('Tolstoy').then((books) => {
+    //   // TODO: use shelves to map book.shelf?
+    //   this.setState({ bookQuery: books });
+    // })
   }
 
   updateQuery(value) {
@@ -43,9 +44,15 @@ class Search extends Component {
           onChange={(event) => this.updateQuery(event.target.value)}
         />
         <Link to='/'>Back</Link>
-        {this.state.bookQuery.map((book) => (
+        <BookShelf
+          title='Search Results'
+          shelves={this.props.shelves}
+          books={this.state.bookQuery}
+          updateShelf={this.updateShelf}
+        />
+        {/* {this.state.bookQuery.map((book) => (
           <Book book={book} key={book.id} updateShelf={this.props.updateShelf} shelf={this.props.shelves[book.id]} />
-        ))}
+        ))} */}
       </div>
     )
   }

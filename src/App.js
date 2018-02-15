@@ -99,21 +99,21 @@ class App extends Component {
             <div className='bookshelves'>
               <BookShelf
                 title='Currently Reading'
-                shelf='currentlyReading'
-                library={this.state.library}
+                shelves={this.state.library.shelves}
+                books={this.state.library.books.filter(book => this.state.library.shelves[book.id] === 'currentlyReading')}
                 updateShelf={this.updateShelf}
               />
               <BookShelf
                 title='Want To Read'
-                shelf='wantToRead'
-                library={this.state.library}
+                shelves={this.state.library.shelves}
+                books={this.state.library.books.filter(book => this.state.library.shelves[book.id] === 'wantToRead')}
                 updateShelf={this.updateShelf}
               />
               {/* <BookShelf title='Recommended' books={this.state.books.filter(book => (book.shelf !== 'read') && (book.shelf !== 'currentlyReading') && (book.shelf !== 'wantToRead') && book.averageRating > 4 )} updateShelf={this.updateShelf} /> */}
               <BookShelf
                 title='Read'
-                shelf='read'
-                library={this.state.library}
+                shelves={this.state.library.shelves}
+                books={this.state.library.books.filter(book => this.state.library.shelves[book.id] === 'read')}
                 updateShelf={this.updateShelf}
               />
             </div>
