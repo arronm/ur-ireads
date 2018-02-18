@@ -1,21 +1,11 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-}
-
-.shelf {
-  /* border: 1px solid lightgray; */
-}
-
-.book {
-  border: 1px solid orange;
-  display: inline-block;
-  padding: 10px;
-  margin: 3px;
-}
-
-.shelf-title {
-  padding: 0 0 10px 0;
-  border-bottom: 1px solid lightgray;
+  font-family: 'Roboto', sans-serif;
 }

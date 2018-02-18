@@ -7,6 +7,7 @@ class BookShelf extends Component {
     title: PropTypes.string.isRequired,
     books: PropTypes.arrayOf(PropTypes.object).isRequired,
     updateShelf: PropTypes.func.isRequired,
+    shelves: PropTypes.objectOf(PropTypes.string).isRequired,
   }
 
   componentDidMount() {
@@ -15,37 +16,31 @@ class BookShelf extends Component {
   render() {
     let shelf = null;
 
-    // if (this.props.library.books.filter(book => this.props.library.shelves[book.id] === this.props.shelf).length > 0) {
-    //   shelf = (
-    //     this.props.library.books.filter(book => this.props.library.shelves[book.id] === this.props.shelf).map((book) => (
-    //       <Book book={book} key={book.id} updateShelf={this.props.updateShelf} shelf={this.props.library.shelves[book.id]} />
-    //     ))
-    //   );
-    // } else {
-    //   shelf = (
-    //     <span>You don{'\''}t appear to have any books in {this.props.title}</span>
-    //   )
-    // }
-
     if (this.props.books.length > 0) {
       shelf = (
         this.props.books.map((book) => (
-          <Book book={book} key={book.id} updateShelf={this.props.updateShelf} shelf={this.props.shelves[book.id]} />
-        ))
-      )
-    } else {
-      shelf = (
-        <span>You don{'\''}t appear to have any books in {this.props.title}</span>
-      )
-    }
+          <li key={book.id}>
+            <Book book={book} updateShelf={this.props.updateShelf} shelf={this.props.shelves[book.id]} />
+          </li>
+          ))
+        )
+      } else {
+        shelf = (
+          <span>You don{'\''}t appear to have any books in {this.props.title}</span>
+        )
+      }
 
-    return (
-      <div>
-        <div className='shelf'>
-          <h2 className='shelf-title'>{this.props.title}</h2>
-          {shelf}
+      return (
+        <div>
+          <div className='bookshelf'>
+            <h2 className='bookshelf-title'>{this.props.title}</h2>
+            <div className='bookshelf-books'>
+              <ol className='books-grid'>
+                {shelf}
+              </ol>
+            </div>
+          </div>
         </div>
-      </div>
     )
   }
 }

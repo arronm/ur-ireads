@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-/*
-  - Display Image
-  - Title
-  - Authors
-  - Options
-*/
- 
 class Book extends Component {
-  // TODO: need to refactor to use book instead of individual props
   static propTypes = {
     book: PropTypes.shape({
       allowAnonLogging: PropTypes.bool,
@@ -50,40 +42,40 @@ class Book extends Component {
       title: PropTypes.string.isRequired,
     }).isRequired,
     updateShelf: PropTypes.func.isRequired,
-    shelf: PropTypes.string,
+    shelf: PropTypes.string.isRequired,
   };
 
   componentDidMount() {
   }
 
   change = e => {
-    // TODO: Update shelf on server by pushing update API request / Update local state
     this.props.updateShelf(this.props.book, e.target.value);
   }
 
-  // TODO: figure out why this is not working in search
-  // shelf = this.props.book.shelf ? this.props.book.shelf : 'none';
-
   render() {
     const currentShelf = this.props.shelf ? this.props.shelf : 'none',
-    authors = this.props.book.authors ? this.props.book.authors : [ 'Unknown' ];
+    authors = this.props.book.authors ? this.props.book.authors : [ 'Unknown' ],
+    thumbnail = this.props.book.imageLinks ? this.props.book.imageLinks.thumbnail : 'https://fakeimg.pl/128x192/?text=No%20Cover';
     return (
       <div className='book'>
-        <img src={this.props.book.imageLinks.thumbnail} alt={this.props.book.title} />
-        <h4 className='book-title'>{ this.props.book.title }</h4>
-        <div className='authors'>
+        <div className='book-top'>
+          <img className='book-cover' src={thumbnail} alt={this.props.book.title} />
+          <div className='book-shelf-changer'>
+            <select onChange={this.change} value={currentShelf}>
+              <option value="none" disabled>Move to...</option>
+              <option value="currentlyReading">Currently Reading</option>
+              <option value="wantToRead">Want to Read</option>
+              <option value="read">Read</option>
+              <option value="none">None</option>
+            </select>
+          </div>
+        </div>
+        <div className='book-title'>{ this.props.book.title }</div>
+        <div className='book-authors'>
           { authors.map((author) => (
             <div className='author' key={author}>{ author }</div>
           )) }
         </div>
-        <select id="lang" onChange={this.change} value={currentShelf}>
-          <option value="none" disabled>Move to...</option>
-          <option value="currentlyReading">Currently Reading</option>
-          <option value="wantToRead">Want to Read</option>
-          <option value="read">Read</option>
-          <option value="none">None</option>
-        </select>
-        <div>{this.props.book.averageRating}</div>
       </div>
     )
   }
